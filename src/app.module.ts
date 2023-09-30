@@ -1,26 +1,45 @@
-import { HttpModule, Module, HttpService } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { HttpModule, HttpService } from '@nestjs/axios';
+import * as Joi from 'joi';
+
+import { lastValueFrom } from 'rxjs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
+import { DatabaseModule } from './database/database.module';
+import { enviroments } from './enviroments';
+import config from './config';
 
-const API_KEY= '123456789';
-const PROD_API_KEY= 'AAAAA123456789';
+
 
 @Module({
-  imports: [HttpModule ,UsersModule, ProductsModule],
+  imports: [
+    ConfigModule.forRoot({
+    envFilePath: enviroments[process.env.NODE_ENV] || '.env', 
+    load: [config],
+    isGlobal: true,
+    validationSchema: Joi.object({
+      API_KEY: Joi.number().required(),
+      DATABASE_NAME: Joi.string().required(),
+      DATABASE_PORT: Joi.number().required()
+    })
+
+  }), 
+  HttpModule, 
+  UsersModule, 
+  ProductsModule, 
+  DatabaseModule],
   controllers: [AppController],
   providers: [
     AppService,
     {
-      provide: 'API_KEY',
-      useValue: process.env.NODE_ENV === 'production' ? PROD_API_KEY : API_KEY,
-    },
-    {
       provide: 'TASKS',
       useFactory: async (http: HttpService) =>{
         // Como realizar la peticion a la API
-        const tasks  = await http.get('https://jsonplaceholder.typicode.com/todos').toPromise();
+        const request  = http.get('https://jsonplaceholder.typicode.com/todos');
+        const tasks = await lastValueFrom(request);
         return tasks.data;
       },
       inject: [HttpService]

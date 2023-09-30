@@ -12,13 +12,14 @@ import {
   Res,
   // ParseIntPipe,
 } from '@nestjs/common';
-
 import { Response } from 'express';
-import { ParseIntPipe } from '../../common/parse-int.pipe';
-import { CreateProductDto, UpdateProductDto } from '../dtos/products.dtos';
+import { ApiTags } from '@nestjs/swagger';
 
+import { ParseIntPipe } from '../../common/parse-int.pipe';
+import { CreateProductDto, UpdateProductDto } from '../dtos/products.dto';
 import { ProductsService } from './../services/products.service';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
