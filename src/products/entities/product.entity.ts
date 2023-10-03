@@ -1,7 +1,8 @@
 import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import DateAt from '../../database/globalEntities/basic.entity';
 
 @Entity()
-export class Product {
+export class Product extends DateAt {
   @PrimaryGeneratedColumn()
   id: number;
 

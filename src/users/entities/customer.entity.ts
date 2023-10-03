@@ -1,7 +1,10 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+
+import DateAt from '../../database/globalEntities/basic.entity';
+import { User } from './user.entity';
 
 @Entity()
-export class Customer {
+export class Customer extends DateAt {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,4 +16,8 @@ export class Customer {
 
   @Column({type: 'varchar'})
   phone: string;
+
+  @OneToOne(()=> User, (user)=> user.customer, {nullable:true})
+  user: User;
+
 }

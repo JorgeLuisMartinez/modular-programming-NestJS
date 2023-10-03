@@ -18,7 +18,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:generate": "npm run typeorm migration:generate -- --dataSource src/database/dataSource.ts",
+    "migration:run": "npm run typeorm migration:run -- --dataSource src/database/dataSource.ts",
+    "migration:show": "npm run typeorm migration:show -- --dataSource src/database/dataSource.ts",
+    "migration:drop": "npm run typeorm migration:drop -- --dataSource src/database/dataSource.ts"
+
   },
   "dependencies": {
     "@angular-devkit/core": "^16.2.4",

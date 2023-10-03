@@ -26,7 +26,7 @@ const PROD_API_KEY = 'AAAAA123456789';
             rejectUnauthorized: false,
           },
           autoLoadEntities: true,
-          synchronize: true,
+          synchronize: false,
         };
       },
     }),
