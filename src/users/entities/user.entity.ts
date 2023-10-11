@@ -4,7 +4,7 @@ import DateAt from '../../database/globalEntities/basic.entity';
 import { Customer } from './customer.entity';
 
 @Entity()
-export class User extends DateAt {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 

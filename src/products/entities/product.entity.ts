@@ -1,8 +1,12 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, ManyToMany } from 'typeorm';
+
 import DateAt from '../../database/globalEntities/basic.entity';
+import { Brand } from './brand.entity';
+import { Category } from './category.entity';
+
 
 @Entity()
-export class Product extends DateAt {
+export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,4 +24,10 @@ export class Product extends DateAt {
 
   @Column({type: 'varchar'})
   image: string;
+
+  @ManyToOne(()=> Brand, (brand)=> brand.products)
+  brand: Brand;
+
+  @ManyToMany(()=> Category, (category)=> category.products)
+  categories: Category[];
 }

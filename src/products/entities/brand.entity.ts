@@ -1,8 +1,11 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+
 import DateAt from '../../database/globalEntities/basic.entity';
+import {Product} from './product.entity';
+
 
 @Entity()
-export class Brand extends DateAt{
+export class Brand {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,4 +14,19 @@ export class Brand extends DateAt{
 
   @Column({type: 'varchar'})
   image: string;
+
+  @CreateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createAt: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updateAt: Date;
+
+  @OneToMany(()=> Product, (product)=> product.brand)
+  products: Product[];
 }

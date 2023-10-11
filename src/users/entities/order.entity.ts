@@ -5,7 +5,7 @@ import { Product } from './../../products/entities/product.entity';
 import DateAt from '../../database/globalEntities/basic.entity';
 
 
-export class Order extends DateAt{
+export class Order {
     date: Date;
     user: User;
     products: Product[];
