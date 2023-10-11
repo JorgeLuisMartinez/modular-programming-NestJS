@@ -13,9 +13,11 @@ export class CreateUserDto {
   @Length(6)
   readonly password: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   readonly role: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsPositive()
   readonly customerId: number;
