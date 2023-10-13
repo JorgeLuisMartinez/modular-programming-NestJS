@@ -23,7 +23,7 @@
     "migration:generate": "npm run typeorm migration:generate -- --dataSource src/database/dataSource.ts",
     "migration:run": "npm run typeorm migration:run -- --dataSource src/database/dataSource.ts",
     "migration:show": "npm run typeorm migration:show -- --dataSource src/database/dataSource.ts",
-    "migration:drop": "npm run typeorm migration:drop -- --dataSource src/database/dataSource.ts"
+    "migration:drop": "npm run typeorm schema:drop -- --dataSource src/database/dataSource.ts"
 
   },
   "dependencies": {

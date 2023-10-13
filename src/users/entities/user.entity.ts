@@ -18,7 +18,6 @@ export class User {
   role: string;
 
   @OneToOne(()=> Customer,(customer)=> customer.user, {nullable:true})
-  //El join column solo debe ir en uno de los dos lados de la relaciono uno a uno, la entidad que tenga la relacion es la que debe llevar el @joinColumn()
-  @JoinColumn()
+  @JoinColumn({ name: 'customer_id' })//El join column solo debe ir en uno de los dos lados de la relaciono uno a uno, la entidad que tenga la relacion es la que debe llevar el @joinColumn()
   customer:Customer;
 }
