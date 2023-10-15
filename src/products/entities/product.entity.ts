@@ -1,4 +1,15 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, ManyToMany, Index, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  ManyToOne,
+  ManyToMany,
+  Index,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn
+} from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 import DateAt from '../../database/globalEntities/basic.entity';
 import { Brand } from './brand.entity';
@@ -28,6 +39,7 @@ export class Product {
   @Column({type: 'varchar'})
   image: string;
 
+  @Exclude()
   @CreateDateColumn({
     name: 'create_at',
     type: 'timestamp',
@@ -35,6 +47,7 @@ export class Product {
   })
   createAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
     name: 'update_at',
     type: 'timestamp',

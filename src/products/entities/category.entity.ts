@@ -1,4 +1,5 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 import DateAt from '../../database/globalEntities/basic.entity';
 import { Product } from './product.entity';
@@ -11,9 +12,11 @@ export class Category {
   @Column({type: 'varchar', length: '255', unique: true})
   name: string;
 
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updateAt: Date;
 

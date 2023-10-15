@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { Order } from './../entities/order.entity';
 import { OrderItem } from './../entities/order-item.entity';
 import { Product } from './../../products/entities/product.entity';
-import { CreateOrderItemDto } from './../dtos/order-item.dto';
+import { CreateOrderItemDto, UpdateOrderItemDto } from './../dtos/order-item.dto';
 
 @Injectable()
 export class OrderItemService {
@@ -23,5 +23,23 @@ export class OrderItemService {
     item.product = product;
     item.quantity = data.quantity;
     return this.itemRepo.save(item);
+  }
+
+  async update(id: number, changes: UpdateOrderItemDto) {
+    const item = await this.itemRepo.findOne({ where: { id:id}});
+    if (changes.orderId) {
+      const order = await this.orderRepo.findOne({ where: { id: changes.orderId } });
+      item.order = order;
+    }
+    if (changes.productId) {
+      const product = await this.productRepo.findOne({ where: {id: changes.productId}});
+      item.product = product;
+    }
+    this.itemRepo.merge(item, changes);
+    return this.itemRepo.save(item);
+  }
+
+  remove(id: number) {
+    return this.itemRepo.delete(id);
   }
 }
