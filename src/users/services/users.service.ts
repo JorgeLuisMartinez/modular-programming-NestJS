@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Client } from 'pg';
+import * as bcrypt from 'bcrypt';
 
 import { User } from '../entities/user.entity';
 import { Order } from '../entities/order.entity';
@@ -14,7 +15,7 @@ import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 export class UsersService {
 
   constructor(
-    private productsService: ProductsService, 
+    private productsService: ProductsService,
     private configService: ConfigService,
     @Inject('PG') private clientPg: Client,
     @InjectRepository(User) private userRepo:Repository<User>,
@@ -35,8 +36,14 @@ export class UsersService {
     return user;
   }
 
+  findByEmail(email: string){
+    return this.userRepo.findOne({ where: { email } });
+  }
+
   async create(data: CreateUserDto) {
-    const newUser = this.userRepo.create(data)
+    const newUser = this.userRepo.create(data);
+    const hashPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = hashPassword;
     if (data.customerId) {
       const customer = await this.custormerService.findOne(data.customerId);
       newUser.customer = customer;
