@@ -18,7 +18,7 @@ export class Customer {
   @Column({type: 'varchar'})
   phone: string;
 
-  @OneToOne(()=> User, (user)=> user.customer, {nullable:true})
+  @OneToOne(()=> User, (user)=> user.customer, { nullable:true })
   user: User;
 
   @OneToMany(() => Order, (order) => order.customer)
