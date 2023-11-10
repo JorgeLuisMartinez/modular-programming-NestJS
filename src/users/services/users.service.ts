@@ -84,4 +84,38 @@ export class UsersService {
     })
   }
 
+  async setCurrentRefreshToken(refreshToken: string, userId: number) {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.userRepo.update(userId, {
+      currentHashedRefreshToken
+    });
+  }
+
+  async getById(id: number) {
+    const user = await this.userRepo.findOne({where: {id} });
+    if (user) {
+      return user;
+    }
+    throw new Error('User with this id does not exist');
+  }
+
+  async getUserIfRefreshTokenMatches(refreshToken: string, userId: number) {
+    const user = await this.getById(userId);
+
+    const isRefreshTokenMatching = await bcrypt.compare(
+      refreshToken,
+      user.currentHashedRefreshToken
+    );
+
+    if (isRefreshTokenMatching) {
+      return user;
+    }
+  }
+
+  async removeRefreshToken(userId: number) {
+    return this.userRepo.update(userId, {
+      currentHashedRefreshToken: null
+    });
+  }
+
 }

@@ -14,6 +14,9 @@ export default registerAs('config', () => {
       dbName: process.env.DB_NAME
     },
     apiKey: process.env.API_KEY,
-    jwtSecret: process.env.JWT_SECRET
+    jwtSecret: process.env.JWT_SECRET,
+    jwtExpirationTime: process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME,
+    jwtRefreshSecret: process.env.JWT_REFRESH_TOKEN_SECRET,
+    jwtRefreshExpiration: process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME,
   };
 });
