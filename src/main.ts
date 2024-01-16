@@ -17,7 +17,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
   const config = new DocumentBuilder()
     .setTitle('API')
-    .setDescription('Documentacion de la api para el proyecto platziStore')
+    .setDescription('Documentacion de la api para el proyecto SSIU')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
